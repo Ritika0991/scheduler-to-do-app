@@ -56,7 +56,7 @@ public class MenuProvider extends ContentProvider {
                 builder.where(DbContract.MenuEntry._ID + "=?", id);
             case ROUTE_ENTRIES:
                 // Return all known entries.
-                builder.table(DbContract.MenuEntry.TABLE_NAME)
+                builder.table(DbContract.MenuEntry.TABLE1)
                         .where(selection, selectionArgs);
                 Cursor c = builder.query(db, projection, sortOrder);
                 // Note: Notification URI must be manually set here for loaders to correctly
@@ -97,7 +97,7 @@ public class MenuProvider extends ContentProvider {
         Uri result;
         switch (match) {
             case ROUTE_ENTRIES:
-                long id = db.insertOrThrow(DbContract.MenuEntry.TABLE_NAME, null, contentValues);
+                long id = db.insertOrThrow(DbContract.MenuEntry.TABLE1, null, contentValues);
                 result = Uri.parse(DbContract.MenuEntry.CONTENT_URI + "/" + id);
                 break;
             case ROUTE_ENTRIES_ID:
@@ -120,13 +120,13 @@ public class MenuProvider extends ContentProvider {
         int count;
         switch (match) {
             case ROUTE_ENTRIES:
-                count = builder.table(DbContract.MenuEntry.TABLE_NAME)
+                count = builder.table(DbContract.MenuEntry.TABLE1)
                         .where(selection, selectionArgs)
                         .delete(db);
                 break;
             case ROUTE_ENTRIES_ID:
                 String id = uri.getLastPathSegment();
-                count = builder.table(DbContract.MenuEntry.TABLE_NAME)
+                count = builder.table(DbContract.MenuEntry.TABLE1)
                         .where(DbContract.MenuEntry._ID + "=?", id)
                         .where(selection, selectionArgs)
                         .delete(db);
@@ -149,13 +149,13 @@ public class MenuProvider extends ContentProvider {
         int count;
         switch (match) {
             case ROUTE_ENTRIES:
-                count = builder.table(DbContract.MenuEntry.TABLE_NAME)
+                count = builder.table(DbContract.MenuEntry.TABLE1)
                         .where(selection, selectionArgs)
                         .update(db, contentValues);
                 break;
             case ROUTE_ENTRIES_ID:
                 String id = uri.getLastPathSegment();
-                count = builder.table(DbContract.MenuEntry.TABLE_NAME)
+                count = builder.table(DbContract.MenuEntry.TABLE1)
                         .where(DbContract.MenuEntry._ID + "=?", id)
                         .where(selection, selectionArgs)
                         .update(db, contentValues);

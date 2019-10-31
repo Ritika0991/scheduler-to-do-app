@@ -42,26 +42,25 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        final String SQL_CREATE_BUGS_TABLE = "CREATE TABLE " + DbContract.MenuEntry.TABLE_NAME + " (" +
-                DbContract.MenuEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                DbContract.MenuEntry.COLUMN_NAME + " TEXT UNIQUE NOT NULL, " +
-                DbContract.MenuEntry.COLUMN_DESCRIPTION + " TEXT NOT NULL, " +
-                DbContract.MenuEntry.COLUMN_PRICE + " TEXT NOT NULL, " +
-                DbContract.MenuEntry.COLUMN_CATEGORY + " TEXT NOT NULL, " +
-                DbContract.MenuEntry.COLUMN_PHOTO + " INTEGER NOT NULL " + " );";
+        final String SQL_CREATE_BUGS_TABLE1 = "CREATE TABLE " + DbContract.MenuEntry.TABLE1 + " (" +
+                DbContract.MenuEntry._ID + " INTEGER PRIMARY KEY," +
+                DbContract.MenuEntry.COLUMN_NAME + " TEXT , " +
+                DbContract.MenuEntry.COLUMN_DESCRIPTION + " TEXT , " +
+                DbContract.MenuEntry.COLUMN_SCHEDULED + " TEXT " + " );";
+        final String SQL_CREATE_BUGS_TABLE2 = "CREATE TABLE " + DbContract.MenuEntry.TABLE2 + " (" +
+                DbContract.MenuEntry._ID + " INTEGER PRIMARY KEY ," +
+                DbContract.MenuEntry.TASK_ID + " INTEGER ," +
+                DbContract.MenuEntry.COLUMN_NAME + " TEXT , " +
+                DbContract.MenuEntry.COLUMN_DESCRIPTION + " TEXT, " +
+                DbContract.MenuEntry.COLUMN_SCHEDULED + " TEXT, " +
+                 "FOREIGN KEY ("+DbContract.MenuEntry.TASK_ID+") REFERENCES "+ DbContract.MenuEntry.TABLE1+
+                "("+ DbContract.MenuEntry._ID+") "+");";
 
 
-        db.execSQL(SQL_CREATE_BUGS_TABLE);
+        db.execSQL(SQL_CREATE_BUGS_TABLE1);
+        db.execSQL(SQL_CREATE_BUGS_TABLE2);
         Log.d(TAG, "Database Created Successfully" );
-
-
-        try {
             readDataToDb(db);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
 
     }
@@ -71,7 +70,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
-    private void readDataToDb(SQLiteDatabase db) throws IOException, JSONException {
+    /*private void readDataToDb(SQLiteDatabase db) throws IOException, JSONException {
 
 
         final String MNU_NAME = "name";
@@ -81,10 +80,10 @@ public class DbHelper extends SQLiteOpenHelper {
         final String MNU_PHOTO = "photo";
 
         try {
-            String jsonDataString = readJsonDataFromFile();
-            JSONArray menuItemsJsonArray = new JSONArray(jsonDataString);
+//            String jsonDataString = readJsonDataFromFile();
+//            JSONArray menuItemsJsonArray = new JSONArray(jsonDataString);
 
-            for (int i = 0; i < menuItemsJsonArray.length(); ++i) {
+//            for (int i = 0; i < menuItemsJsonArray.length(); ++i) {
 
                 String name;
                 String description;
@@ -123,9 +122,36 @@ public class DbHelper extends SQLiteOpenHelper {
             e.printStackTrace();
         }
 
+    }*/
+    private void readDataToDb(SQLiteDatabase db){
+        db.execSQL("INSERT INTO tasks ("+DbContract.MenuEntry._ID+",name,description,scheduled)"+
+                "VALUES (1, 'Acads', 'Padhai ki baatein', '2019-12-31');");
+
+        db.execSQL("INSERT INTO tasks ("+DbContract.MenuEntry._ID+",name,description,scheduled)"+
+                "VALUES (2, 'Self improvement', 'Reading list, blogs, exercise, etc.', '2019-12-30');");
+
+        db.execSQL("INSERT INTO tasks ("+DbContract.MenuEntry._ID+",name,description,scheduled)"+
+                "VALUES (3, 'Research', 'Pet projects', null);");
+
+        db.execSQL("INSERT INTO tasks ("+DbContract.MenuEntry._ID+",name,description,scheduled)"+
+                "VALUES (4, 'Hobbies', '<3', null);");
+
+
+
+        db.execSQL("INSERT INTO subtasks ("+DbContract.MenuEntry._ID+",task_id,name,description,scheduled)"+
+                "VALUES (1,2,'Excercise','someday?', '2021-2-29');");
+
+        db.execSQL("INSERT INTO subtasks ("+DbContract.MenuEntry._ID+",task_id,name,description,scheduled)"+
+                "VALUES (2,2,'Reading list','My bucket list:\nHear the Wind Sing\nThe Fountainhead\nAtlas Shrugged\nA prisoner of birth', null);");
+
+        db.execSQL("INSERT INTO subtasks ("+DbContract.MenuEntry._ID+",task_id,name,description,scheduled)"+
+                "VALUES (3,4,'Origami','cranes and tigers.', '2019-10-29');");
+
+        db.execSQL("INSERT INTO subtasks ("+DbContract.MenuEntry._ID+",task_id,name,description,scheduled)"+
+              " VALUES (4,4,'Drum practice!','Aim:\nHallowed be thy name,\nAcid Rain (LTE)', '2019-10-29');");
     }
 
-    private String readJsonDataFromFile() throws IOException {
+   /* private String readJsonDataFromFile() throws IOException {
 
         InputStream inputStream = null;
         StringBuilder builder = new StringBuilder();
@@ -145,5 +171,5 @@ public class DbHelper extends SQLiteOpenHelper {
         }
 
         return new String(builder);
-    }
+    }*/
 }

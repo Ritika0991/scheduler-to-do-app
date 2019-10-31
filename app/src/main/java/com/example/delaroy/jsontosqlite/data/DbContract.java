@@ -27,12 +27,13 @@ public class DbContract {
         public static final Uri CONTENT_URI =
                 BASE_CONTENT_URI.buildUpon().appendPath(PATH_ENTRIES).build();
 
-        public static final String TABLE_NAME = "menu";
+        public static final String TABLE1 = "tasks";
+        public static final String TABLE2 = "subtasks";
+        public static final String TASK_ID = "task_id";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_DESCRIPTION = "description";
-        public static final String COLUMN_PRICE = "price";
-        public static final String COLUMN_CATEGORY = "category";
-        public static final String COLUMN_PHOTO = "photo";
+        public static final String COLUMN_SCHEDULED = "scheduled";
+
 
     }
 }

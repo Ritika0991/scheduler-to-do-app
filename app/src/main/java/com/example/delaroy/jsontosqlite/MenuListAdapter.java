@@ -29,7 +29,7 @@ public class MenuListAdapter extends
     /* ViewHolder for each insect item */
     public class MenuHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView menuName, menuPrice, menuCategory, menuDescription;
+        TextView menuName, menuCategory, menuDescription;
         ImageView image;
 
 
@@ -38,7 +38,7 @@ public class MenuListAdapter extends
 
 
             menuName = (TextView) itemView.findViewById(R.id.menu_item_name);
-            menuPrice = (TextView) itemView.findViewById(R.id.menu_item_price);
+            //menuPrice = (TextView) itemView.findViewById(R.id.menu_item_price);
             menuCategory = (TextView) itemView.findViewById(R.id.menu_item_category);
             menuDescription = (TextView) itemView.findViewById(R.id.menu_item_description);
 
@@ -90,18 +90,18 @@ public class MenuListAdapter extends
         if (mCursor != null) {
             if (mCursor.moveToPosition(position)) {
                 int menuname = mCursor.getColumnIndex(DbContract.MenuEntry.COLUMN_NAME);
-                int menuprice = mCursor.getColumnIndex(DbContract.MenuEntry.COLUMN_PRICE);
-                int menucategory = mCursor.getColumnIndex(DbContract.MenuEntry.COLUMN_CATEGORY);
+                //int menuprice = mCursor.getColumnIndex(DbContract.MenuEntry.COLUMN_DESCRIPTION);
+                int menucategory = mCursor.getColumnIndex(DbContract.MenuEntry.COLUMN_SCHEDULED);
                 int menudescription = mCursor.getColumnIndex(DbContract.MenuEntry.COLUMN_DESCRIPTION);
 
                 String menuName = mCursor.getString(menuname);
-                String menuPrice = mCursor.getString(menuprice);
+                //String menuPrice = mCursor.getString(menucategory);
                 String menuCategory = mCursor.getString(menucategory);
                 String menuDescription = mCursor.getString(menudescription);
 
                 holder.menuName.setText(menuName);
 
-                holder.menuPrice.setText(menuPrice);
+                //holder.menuPrice.setText(menuPrice);
                 holder.menuCategory.setText(menuCategory);
                 holder.menuDescription.setText(menuDescription);
 
